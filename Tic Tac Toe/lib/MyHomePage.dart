@@ -54,20 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       else{ player = widget.player2; }
       showMessageDialog(context, '$player won the game:');
+    }  else if (grid.every((element) => element != ' ')) {
+      // Check for a draw
+      showMessageDialog(context, 'oops! It\'s a draw game..');
     }
   }
-
-  bool checkDraw() {
-    for (int i = 0; i < grid.length; i++) {
-      if (grid[i] == ' ') {
-        // If any cell is still empty, the game is not a draw
-        return false;
-      }
-    }
-    // All cells are filled, and no one has won, so it's a draw
-    return true;
-  }
-
 
   void showMessageDialog(BuildContext context, String message) {
     showDialog(
