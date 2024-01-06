@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void findWinner(currentPlayer) {
     if(checkWinner(0,1,2,currentPlayer) || checkWinner(3,4,5,currentPlayer) || checkWinner(6,7,8,currentPlayer) ||
-    checkWinner(0,3,6,currentPlayer) || checkWinner(1,4,5,currentPlayer) || checkWinner(2,5,8,currentPlayer) ||
+    checkWinner(0,3,6,currentPlayer) || checkWinner(1,4,7,currentPlayer) || checkWinner(2,5,8,currentPlayer) ||
     checkWinner(0,4,8,currentPlayer) || checkWinner(2,4,6,currentPlayer)
     ) {
       String player;
@@ -53,12 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
         player = widget.player1;
       }
       else{ player = widget.player2; }
-      showMessageDialog(context, '$player won the game:');
-    }  else if (grid.every((element) => element != ' ')) {
+      showMessageDialog(context, 'Congratulations $player won the game:');
+    } else if (grid.every((element) => element != ' ')) {
       // Check for a draw
       showMessageDialog(context, 'oops! It\'s a draw game..');
     }
   }
+
 
   void showMessageDialog(BuildContext context, String message) {
     showDialog(
@@ -67,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return PopScope(
             canPop: false ,
             child: AlertDialog(
-              title: const Text('Congratulations', style: TextStyle(color: Colors.orange),),
-              content: Text(message, style: const TextStyle(color: Colors.deepPurple)),
+              title: const Text('Tic Tac Toe', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 14),),
+              content: Text(message, style: const TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold)),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -101,7 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${widget.player1} [X]", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                currentPlayer == 'X'
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.arrow_forward, color: Colors.orange),
+                      Text("${widget.player1} [X]", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orange)),
+                    ],
+                  )
+                  : Text("${widget.player1} [X]", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 const SizedBox(height: 16),
                 GridView.builder(
                   shrinkWrap: true,
@@ -123,7 +132,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 const SizedBox(height: 16),
-                Text("${widget.player2} [O]", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                currentPlayer == 'O'
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.arrow_forward, color: Colors.orange),
+                      Text("${widget.player2} [O]", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orange)),
+                    ],
+                  )
+                  : Text("${widget.player2} [O]", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 const SizedBox(height: 16),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.50,
